@@ -137,6 +137,8 @@ def ordinal_dia(fecha):
 
         count += i
         return count
+    else:
+        return None
 
 
 def imprimir_3x4():
