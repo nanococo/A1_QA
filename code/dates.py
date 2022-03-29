@@ -181,6 +181,7 @@ def cacular_dia(anno):
     valor= (1+5*((anno-1)%4)+4*((anno-1)%100)+6*((anno-1)%400))%7
     return valor
 
+
 def imprimir_3x4(anno):
     meses ={1:'Enero', 2:'Febrero', 3:'Marzo',  
         4:'Abril', 5:'Mayo', 6:'Junio', 7:'Julio', 
