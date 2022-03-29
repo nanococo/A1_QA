@@ -140,111 +140,153 @@ def ordinal_dia(fecha):
     else:
         return None
 
-def imprimir_mes(dias):
-    diaSemana=1
+def imprimir_mes(dias, diaSemana):
     semana=''
     salida=[]
+    contador = diaSemana
+    if contador > 1:
+        while contador != 1:
+            semana = semana + '   '
+            contador = contador - 1
     for i in range (1,dias+1):
         if diaSemana == 7:
             semana = semana + str(i)
             salida.append(semana)
             semana = ''
-            #print(str(i)+'  ', end="")
-            # print(space.rjust(0, ' '), end ='')
             diaSemana=1     
         else:
             if i<10:
                 semana= semana+str(i)+'  '
-##                print(str(i)+'  ', end="") 
                 diaSemana += 1
                 
             else:
                 semana = semana + str(i)+' '
-                diaSemana += 1
-                
-    salida.append(semana)
-    return salida 
+                diaSemana += 1           
+    if len(semana) < 20:
+        index= len(semana)
+        semanaTemp = list(semana)
+        semanaTemp.insert(0,' ')
+        index += 1
+        while index < 22:
+            semanaTemp.append(' ')
+            index += 1
+            
+    salida.append("".join(semanaTemp))
+    salida.append('      ')
+    salida.append(len(semana.replace(" ", "")))
+    return salida
 
+
+def cacular_dia(anno):
+    valor= (1+5*((anno-1)%4)+4*((anno-1)%100)+6*((anno-1)%400))%7
+    return valor
 
 def imprimir_3x4(anno):
     meses ={1:'Enero', 2:'Febrero', 3:'Marzo',  
         4:'Abril', 5:'Mayo', 6:'Junio', 7:'Julio', 
         8:'Agosto', 9:'Setiembre', 10:'Octubre', 
         11:'Noviembre', 12:'Diciembre'}
-    diaSemana='D '+ " " +'L '+ " " + 'K ' + " " + 'M ' + " " + 'J ' + " " + 'V ' + " " + 'S'
+    
+    diasSemanas='L '+ " " + 'K ' + " " + 'M ' + " " + 'J ' + " " + 'V ' + " " + 'S' + " " + ' D'
+    
     if anno > 1582:
         print('Calendario del año ' + str(anno) + ' D.C'+'\n')
         mesActual = 1
+        diaSemana = cacular_dia(anno)
         while mesActual <= 12:
             print('\n''{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(meses[mesActual],'|',meses[mesActual+1],'|',meses[mesActual+2],'|',meses[mesActual+3]))
-            print('{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(diaSemana,'|',diaSemana,'|',diaSemana,'|',diaSemana))
+            print('{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(diasSemanas,'|',diasSemanas,'|',diasSemanas,'|',diasSemanas))
             index = 1
             calendario=[]
             while index <=4:
-                if mesActual == 4 or mesActual == 6 or mesActual == 9 or mesActual == 11:
-                    calendario.append(imprimir_mes(30))
-                    index +=1
-                    mesActual +=1
+                if mesActual == 1:
+                    calendario.append(imprimir_mes(31,diaSemana))
+                    diaSemana = int(calendario[len(calendario)-1].pop())//2 +1
+                    index += 1
+                    mesActual += 1
+                    
+                elif mesActual == 4 or mesActual == 6 or mesActual == 9 or mesActual == 11:
+                    
+                    calendario.append(imprimir_mes(30,diaSemana))
+                    diaSemana = int(calendario[len(calendario)-1].pop())//2 +1
+                    index += 1
+                    mesActual += 1
                     
                 elif mesActual == 2:
                     if bisiesto(anno) == True :
-                        calendario.append(imprimir_mes(29))
-                        mesActual +=1
-                        index +=1
+                        calendario.append(imprimir_mes(29,diaSemana))
+                        diaSemana = int(calendario[len(calendario)-1].pop())//2 +1
+                        mesActual += 1
+                        index += 1
                     else:
-                        calendario.append(imprimir_mes(28))
-                        mesActual +=1
-                        index +=1
+                        calendario.append(imprimir_mes(28,diaSemana))
+                        diaSemana = int(calendario[len(calendario)-1].pop())//2 +1
+                        mesActual += 1
+                        index += 1
                 else:
-                    calendario.append(imprimir_mes(31))
-                    mesActual +=1
-                    index +=1
-                    
+                    calendario.append(imprimir_mes(31,diaSemana))
+                    diaSemana = int(calendario[len(calendario)-1].pop())//2 +1
+                    mesActual += 1
+                    index += 1
+            
             fila = 0
             while fila < len(max(calendario)):
                 print('{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(calendario[0][fila],'|',calendario[1][fila],'|',calendario[2][fila],'|',calendario[3][fila]))
                 fila += 1      
-
     else:
         return "Ingrese un año perteneciente al rango permitido."
 
-##print(imprimir_mes(31))
-##diaSemana='D '+ " " +'L '+ " " + 'K ' + " " + 'M ' + " " + 'J ' + " " + 'V ' + " " + 'S'
-##print('{:^30}{:^30}'.format('Enero','Febrero'))
-##print('{:^30}{:^30}'.format(diaSemana,diaSemana))
-##print('{:^30}{:^30}'.format(imprimir_mes(31),imprimir_mes(30)))
-##print('\n' '{:^30}{:^30}'.format('Enero','Febrero'))
 
-imprimir_3x4(2000)
-##n=31
-##diaSemana=1
-##space =''
+
+def menu():
+    print('--------Menu-------------')
+    print('1.fecha_es_tupla')
+    print('2.bisiesto')
+    print('3.fecha_es_valida')
+    print('4.dia_siguiente')
+    print('5.ordinal_dia')
+    print('6.imprimir_3x4')
+    print('7.Salir')
+    opcion = int(input('Seleccione una opcion: '))
+
+    if opcion == 1:
+        fecha = int(input('Ingrese una fecha: '))
+        fecha_es_tupla(fecha)
+        return menu()
+    
+    elif opcion == 2:
+        anno = int(input('Ingrese un año: '))
+        bisiesto(anno)
+        return menu()
+    
+    elif opcion == 3:
+        fecha = int(input('Ingrese una fecha: '))
+        fecha_es_valida(fecha)
+        return menu()
+    
+    elif opcion == 4:
+        fecha = int(input('Ingrese una fecha: '))
+        dia_siguiente(fecha)
+        return menu()
+    
+    elif opcion == 5:
+        fecha = int(input('Ingrese una fecha: '))
+        ordinal_dia(fecha)
+        return menu()
+    
+    elif opcion == 6:
+        anno = int(input('Ingrese un año: '))
+        imprimir_3x4(anno)
+        return menu()
+    
+    else:
+        return 'Adios'
+
+
+
+menu()
 ##
-##for i in range (1,n+1):
-##    if diaSemana > 7:
-##        print()
-##        if i < 10:
-##            print(str(i)+'  ', end="")
-##           ## print(space.rjust(0, ' '), end ='')
-##            diaSemana=2
-##        else:
-##            print(str(i)+' ', end="")
-##            ##print(space.rjust(0, ' '), end ='')
-##            diaSemana=2
-##    else:
-##        if i<10:
-##            print(str(i)+'  ', end="") 
-##            diaSemana += 1
-##            
-##        else:
-##            print(str(i)+' ', end="") 
-##            diaSemana += 1
-        
-
-
-
-        
-if __name__ == '__main__':
-    prueba = (1582, 10, 14)
-    print(fecha_es_vailida(prueba))
-  ##  print(imprimir_3x4(2000))
+##if __name__ == '__main__':
+##    prueba = (1582, 10, 14)
+##    print(fecha_es_vailida(prueba))
+##  ##  print(imprimir_3x4(2000))
