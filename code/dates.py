@@ -152,12 +152,13 @@ def ordinal_dia(fecha):
         return "Error, la fecha no es valida"
 
 
-# Esta función se encarga de escribir el mes
+# Esta función se encarga en realizar una lista con las filas que se mostraran en el calendario 3x4 , estas dependen del mes. 
+#Toma en cuenta el dia de la semana en el que inicia el mes.
 def imprimir_mes(dias, dia_semana):
     semana_temp = []
-    semana = ''
-    salida = []
-    contador = dia_semana
+    semana = ''             #Esta variable guarda 'cada semana' del mes que se ingreso , lista para imprimir
+    salida = []             #Esta variable guarda en una lista las semanas del mes , al recogerer la lista se muestra el calendario.
+    contador = dia_semana 
     if contador > 1:
         while contador != 1:
             semana = semana + '   '
@@ -181,7 +182,7 @@ def imprimir_mes(dias, dia_semana):
         semana_temp = list(semana)
         semana_temp.insert(0, ' ')
         index += 1
-        while index < 22:
+        while index < 22:                   
             semana_temp.append(' ')
             index += 1
 
@@ -191,10 +192,14 @@ def imprimir_mes(dias, dia_semana):
     return salida
 
 
+#Esta función se encarga calcula el dia de la semana del 1 de enero del año que el usuario ingrese , como punto de partida para los otros meses.
 def cacular_dia(anno):
     valor = (1 + 5 * ((anno - 1) % 4) + 4 * ((anno - 1) % 100) + 6 * ((anno - 1) % 400)) % 7
     return valor
 
+
+#Esta funcion se encarga en mostrar el calendario de forma 3x4.
+#Toma en cuenta si el año es bisiesto y el día de la semana en el que inicia el año.
 
 def imprimir_3x4(anno):
     meses = {1: 'Enero', 2: 'Febrero', 3: 'Marzo',
@@ -217,7 +222,7 @@ def imprimir_3x4(anno):
                                                                    dias_semanas))
             index = 1
             calendario = []
-            while index <= 4:
+            while index <= 4:           #Este loop guarda en una lista llamada calendario la lista de cada mes con sus semanas.
                 if mes_actual == 1:
                     calendario.append(imprimir_mes(31, dia_semana))
                     dia_semana = int(calendario[len(calendario) - 1].pop()) // 2 + 1
@@ -249,7 +254,7 @@ def imprimir_3x4(anno):
                     index += 1
 
             fila = 0
-            while fila < len(max(calendario)):
+            while fila < len(max(calendario)): #Este loop permite imprimir las filas del calendario , de forma en que se muestren 4 meses seguidos. 
                 print(
                     '{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(calendario[0][fila], '|', calendario[1][fila], '|',
                                                                      calendario[2][fila], '|', calendario[3][fila]))
