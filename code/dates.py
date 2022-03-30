@@ -261,9 +261,3 @@ def imprimir_3x4(anno):
                 fila += 1
     else:
         print("Ingrese un año perteneciente al rango permitido.")
-
-
-if __name__ == '__main__':
-    imprimir_3x4(1500)
-
-
