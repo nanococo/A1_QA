@@ -50,10 +50,13 @@ def fecha_es_valida(fecha):
 # Esta función recibe un int año y se encarga de revisar si es o no un bisiesto
 def bisiesto(anno):
     if type(anno) == int:
-        if (anno % 400 == 0) or (anno % 100 != 0) and (anno % 4 == 0):
-            return True
+        if anno > 1582:
+            if (anno % 400 == 0) or (anno % 100 != 0) and (anno % 4 == 0):
+                return True
+            else:
+                return False
         else:
-            return False
+            return "Error, seleccione un año mayor a 1582"
     else:
         return "Error, la funcion bisiesto debe recibir un numero entero"
 
@@ -247,3 +250,4 @@ def imprimir_3x4(anno):
                 fila += 1
     else:
         return "Ingrese un año perteneciente al rango permitido."
+
