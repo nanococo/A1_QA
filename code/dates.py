@@ -2,6 +2,7 @@
 def fecha_es_tupla(fecha):
     return type(fecha) is tuple and len(fecha) == 3
 
+
 # Esta función se encarga de revisar si una fecha está dentro de un rango permitido en cuanto a formato y rango del
 # calendario gregoriano.
 def fecha_es_valida(fecha):
@@ -46,6 +47,7 @@ def fecha_es_valida(fecha):
                         return True
 
     return False
+
 
 # Esta función recibe un int año y se encarga de revisar si es o no un bisiesto
 def bisiesto(anno):
@@ -114,6 +116,7 @@ def dia_siguiente(fecha):
 
     return anno_nuevo, mes_nuevo, dia_nuevo
 
+
 # Esta funcion se encarga de calcular el día del año
 def ordinal_dia(fecha):
     if fecha_es_valida(fecha):
@@ -148,7 +151,8 @@ def ordinal_dia(fecha):
     else:
         return "Error, la fecha no es valida"
 
-#Esta función se encarga de escribir el mes
+
+# Esta función se encarga de escribir el mes
 def imprimir_mes(dias, dia_semana):
     semana_temp = []
     semana = ''
@@ -205,9 +209,11 @@ def imprimir_3x4(anno):
         mes_actual = 1
         dia_semana = cacular_dia(anno)
         while mes_actual <= 12:
-            print('\n''{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(meses[mes_actual], '|', meses[mes_actual + 1], '|',
-                                                                       meses[mes_actual + 2], '|', meses[mes_actual + 3]))
-            print('{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(dias_semanas, '|', dias_semanas, '|', dias_semanas, '|',
+            print(
+                '\n''{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(meses[mes_actual], '|', meses[mes_actual + 1], '|',
+                                                                     meses[mes_actual + 2], '|', meses[mes_actual + 3]))
+            print('{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(dias_semanas, '|', dias_semanas, '|', dias_semanas,
+                                                                   '|',
                                                                    dias_semanas))
             index = 1
             calendario = []
@@ -249,5 +255,10 @@ def imprimir_3x4(anno):
                                                                      calendario[2][fila], '|', calendario[3][fila]))
                 fila += 1
     else:
-        return "Ingrese un año perteneciente al rango permitido."
+        print("Ingrese un año perteneciente al rango permitido.")
+
+
+if __name__ == '__main__':
+    imprimir_3x4(1500)
+
 
