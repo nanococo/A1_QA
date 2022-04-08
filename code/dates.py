@@ -360,15 +360,19 @@ def fecha_hoy():
 #la fecha de hoy.
 def edad_hoy(fecha):
     hoy = fecha_hoy()
-    if fecha_es_valida(fecha) and fecha <= hoy:
-        tupla = edad_al(fecha, hoy)
-        return tupla
+    if fecha_es_valida(fecha):
+        if fecha <= hoy:
+            tupla = edad_al(fecha, hoy)
+            return tupla
+        else:
+            return "Error, la fecha ingresada debe ser menor a la actual"
     else:
-        return "Error, la fecha 1 no es valida"
+        return "Error, la fecha ingresada no es valida"
     
     
 if __name__ == '__main__':
-    print(edad_al((1957, 10, 25), (2022, 4, 6)))
-    #print(fecha_hoy())
     print(edad_hoy((2000, 4, 14)))
+
+    
    # print(imprimir_3x4(2022))
+       #print(edad_al((1957, 10, 25), (2022, 4, 6)))
