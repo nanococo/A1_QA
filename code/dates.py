@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 # Esta función se encarga de validar si una variable de entrada es una tupla de tamaño 3.
 def fecha_es_tupla(fecha):
     return type(fecha) is tuple and len(fecha) == 3
@@ -194,7 +195,7 @@ def imprimir_mes(dias, dia_semana):
     return salida
 
 
-#Esta funcion se encarga en determinar el día de la semana dada una fecha válida.
+# Esta funcion se encarga en determinar el día de la semana dada una fecha válida.
 def dia_semana(fecha):
     # https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
     if fecha_es_valida(fecha):
@@ -232,7 +233,8 @@ def imprimir_3x4(anno):
     if anno > 1582:
         print('Calendario del año ' + str(anno) + ' D.C' + '\n')
         mes_actual = 1
-        dia_inicio = dia_semana((anno,1,1))  #Se eliminó la funcion calcular_dia, debido a que cumplia la misma funcion que dia_semana()
+        dia_inicio = dia_semana(
+            (anno, 1, 1))  # Se eliminó la funcion calcular_dia, debido a que cumplia la misma funcion que dia_semana()
         while mes_actual <= 12:
             print(
                 '\n''{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(meses[mes_actual], '|', meses[mes_actual + 1], '|',
@@ -284,10 +286,10 @@ def imprimir_3x4(anno):
         print("Ingrese un año perteneciente al rango permitido.")
 
 
-#Esta función determina una fecha a n días de la fecha ingresada.
+# Esta función determina una fecha a n días de la fecha ingresada.
 def fecha_futura(fecha, dias):
     if fecha_es_valida(fecha):
-        if dias > 0:
+        if dias >= 0:
             return_fecha = fecha
             for i in range(dias):
                 return_fecha = dia_siguiente(return_fecha)
@@ -298,7 +300,7 @@ def fecha_futura(fecha, dias):
         return "Error, la fecha no es valida"
 
 
-#Esta función determina el numero de dias naturales entre dos fechas ingresadas.
+# Esta función determina el numero de dias naturales entre dos fechas ingresadas.
 def dias_entre(fecha1, fecha2):
     if fecha_es_valida(fecha1):
         if fecha_es_valida(fecha2):
@@ -323,41 +325,43 @@ def dias_entre(fecha1, fecha2):
     else:
         return "Error, la fecha 1 no es valida"
 
-#Esta funcion se encarga en determinar la edad de una persona en años , meses y dias
-#dadas dos fechas.
+
+# Esta funcion se encarga en determinar la edad de una persona en años , meses y dias
+# dadas dos fechas.
 def edad_al(fecha1, fecha2):
     if fecha_es_valida(fecha1):
         if fecha_es_valida(fecha2):
             if fecha2[1] <= fecha1[1] and fecha2[2] < fecha1[2]:
-                dias = (31-fecha1[2]) + fecha2[2]
-                meses = 12 - fecha1[1] + fecha2[1]-1
-                anno = (fecha2[0]-1) - fecha1[0]
-                return anno,meses,dias
+                dias = (31 - fecha1[2]) + fecha2[2]
+                meses = 12 - fecha1[1] + fecha2[1] - 1
+                anno = (fecha2[0] - 1) - fecha1[0]
+                return anno, meses, dias
             else:
                 if fecha2[2] - fecha1[2] < 0:
-                    dias = (31-fecha1[2]) + fecha2[2]
+                    dias = (31 - fecha1[2]) + fecha2[2]
                     meses = 0
                     anno = fecha2[0] - fecha1[0]
-                    return anno,meses, dias
+                    return anno, meses, dias
                 else:
                     dias = fecha2[2] - fecha1[2]
                     meses = fecha2[1] - fecha1[1]
                     anno = fecha2[0] - fecha1[0]
-                    return anno,meses, dias
+                    return anno, meses, dias
         else:
             return "Error, la fecha 2 no es valida"
     else:
         return "Error, la fecha 1 no es valida"
 
-#Esta funcion se encarga en determinar la fecha del día de hoy y devuelve una tupla.
+
+# Esta funcion se encarga en determinar la fecha del día de hoy y devuelve una tupla.
 def fecha_hoy():
     hoy = (datetime.today().strftime('%Y,%m,%d'))
-    fecha_hoy = int(hoy[0:4]),int(hoy[5:7]),int(hoy[8:])
+    fecha_hoy = int(hoy[0:4]), int(hoy[5:7]), int(hoy[8:])
     return fecha_hoy
 
 
-#Esta funcion se encarga en determinar la edad de una persona en años, meses y dias hasta
-#la fecha de hoy.
+# Esta funcion se encarga en determinar la edad de una persona en años, meses y dias hasta
+# la fecha de hoy.
 def edad_hoy(fecha):
     hoy = fecha_hoy()
     if fecha_es_valida(fecha):
@@ -368,11 +372,3 @@ def edad_hoy(fecha):
             return "Error, la fecha ingresada debe ser menor a la actual"
     else:
         return "Error, la fecha ingresada no es valida"
-    
-    
-if __name__ == '__main__':
-    print(edad_hoy((2000, 4, 14)))
-
-    
-   # print(imprimir_3x4(2022))
-       #print(edad_al((1957, 10, 25), (2022, 4, 6)))
