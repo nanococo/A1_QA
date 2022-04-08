@@ -194,6 +194,7 @@ def imprimir_mes(dias, dia_semana):
     return salida
 
 
+#Esta funcion se encarga en determinar el día de la semana dada una fecha válida.
 def dia_semana(fecha):
     # https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
     if fecha_es_valida(fecha):
@@ -220,7 +221,6 @@ def dia_semana(fecha):
 
 # Esta funcion se encarga en mostrar el calendario de forma 3x4.
 # Toma en cuenta si el año es bisiesto y el día de la semana en el que inicia el año.
-
 def imprimir_3x4(anno):
     meses = {1: 'Enero', 2: 'Febrero', 3: 'Marzo',
              4: 'Abril', 5: 'Mayo', 6: 'Junio', 7: 'Julio',
@@ -232,7 +232,7 @@ def imprimir_3x4(anno):
     if anno > 1582:
         print('Calendario del año ' + str(anno) + ' D.C' + '\n')
         mes_actual = 1
-        dia_inicio = dia_semana((anno,1,1))
+        dia_inicio = dia_semana((anno,1,1))  #Se eliminó la funcion calcular_dia, debido a que cumplia la misma funcion que dia_semana()
         while mes_actual <= 12:
             print(
                 '\n''{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(meses[mes_actual], '|', meses[mes_actual + 1], '|',
@@ -284,7 +284,7 @@ def imprimir_3x4(anno):
         print("Ingrese un año perteneciente al rango permitido.")
 
 
-
+#Esta función determina una fecha a n días de la fecha ingresada.
 def fecha_futura(fecha, dias):
     if fecha_es_valida(fecha):
         if dias > 0:
@@ -298,6 +298,7 @@ def fecha_futura(fecha, dias):
         return "Error, la fecha no es valida"
 
 
+#Esta función determina el numero de dias naturales entre dos fechas ingresadas.
 def dias_entre(fecha1, fecha2):
     if fecha_es_valida(fecha1):
         if fecha_es_valida(fecha2):
