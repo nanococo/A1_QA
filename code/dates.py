@@ -322,6 +322,8 @@ def dias_entre(fecha1, fecha2):
     else:
         return "Error, la fecha 1 no es valida"
 
+#Esta funcion se encarga en determinar la edad de una persona en años , meses y dias
+#dadas dos fechas.
 def edad_al(fecha1, fecha2):
     if fecha_es_valida(fecha1):
         if fecha_es_valida(fecha2):
@@ -346,12 +348,15 @@ def edad_al(fecha1, fecha2):
     else:
         return "Error, la fecha 1 no es valida"
 
+#Esta funcion se encarga en determinar la fecha del día de hoy y devuelve una tupla.
 def fecha_hoy():
     hoy = (datetime.today().strftime('%Y,%m,%d'))
     fecha_hoy = int(hoy[0:4]),int(hoy[5:7]),int(hoy[8:])
     return fecha_hoy
 
 
+#Esta funcion se encarga en determinar la edad de una persona en años, meses y dias hasta
+#la fecha de hoy.
 def edad_hoy(fecha):
     hoy = fecha_hoy()
     if fecha_es_valida(fecha) and fecha <= hoy:
