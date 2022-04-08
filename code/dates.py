@@ -1,3 +1,5 @@
+from datetime import datetime
+
 # Esta función se encarga de validar si una variable de entrada es una tupla de tamaño 3.
 def fecha_es_tupla(fecha):
     return type(fecha) is tuple and len(fecha) == 3
@@ -198,71 +200,6 @@ def cacular_dia(anno):
     return valor
 
 
-# Esta funcion se encarga en mostrar el calendario de forma 3x4.
-# Toma en cuenta si el año es bisiesto y el día de la semana en el que inicia el año.
-
-def imprimir_3x4(anno):
-    meses = {1: 'Enero', 2: 'Febrero', 3: 'Marzo',
-             4: 'Abril', 5: 'Mayo', 6: 'Junio', 7: 'Julio',
-             8: 'Agosto', 9: 'Setiembre', 10: 'Octubre',
-             11: 'Noviembre', 12: 'Diciembre'}
-
-    dias_semanas = 'L ' + " " + 'K ' + " " + 'M ' + " " + 'J ' + " " + 'V ' + " " + 'S' + " " + ' D'
-
-    if anno > 1582:
-        print('Calendario del año ' + str(anno) + ' D.C' + '\n')
-        mes_actual = 1
-        dia_semana = cacular_dia(anno)
-        while mes_actual <= 12:
-            print(
-                '\n''{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(meses[mes_actual], '|', meses[mes_actual + 1], '|',
-                                                                     meses[mes_actual + 2], '|', meses[mes_actual + 3]))
-            print('{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(dias_semanas, '|', dias_semanas, '|', dias_semanas,
-                                                                   '|',
-                                                                   dias_semanas))
-            index = 1
-            calendario = []
-            while index <= 4:  # Este loop guarda en una lista llamada calendario la lista de cada mes con sus semanas.
-                if mes_actual == 1:
-                    calendario.append(imprimir_mes(31, dia_semana))
-                    dia_semana = int(calendario[len(calendario) - 1].pop()) // 2 + 1
-                    index += 1
-                    mes_actual += 1
-
-                elif mes_actual == 4 or mes_actual == 6 or mes_actual == 9 or mes_actual == 11:
-
-                    calendario.append(imprimir_mes(30, dia_semana))
-                    dia_semana = int(calendario[len(calendario) - 1].pop()) // 2 + 1
-                    index += 1
-                    mes_actual += 1
-
-                elif mes_actual == 2:
-                    if bisiesto(anno):
-                        calendario.append(imprimir_mes(29, dia_semana))
-                        dia_semana = int(calendario[len(calendario) - 1].pop()) // 2 + 1
-                        mes_actual += 1
-                        index += 1
-                    else:
-                        calendario.append(imprimir_mes(28, dia_semana))
-                        dia_semana = int(calendario[len(calendario) - 1].pop()) // 2 + 1
-                        mes_actual += 1
-                        index += 1
-                else:
-                    calendario.append(imprimir_mes(31, dia_semana))
-                    dia_semana = int(calendario[len(calendario) - 1].pop()) // 2 + 1
-                    mes_actual += 1
-                    index += 1
-
-            fila = 0
-            while fila < len(
-                    max(calendario)):  # Este loop permite imprimir las filas del calendario , de forma en que se muestren 4 meses seguidos.
-                print(
-                    '{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(calendario[0][fila], '|', calendario[1][fila], '|',
-                                                                     calendario[2][fila], '|', calendario[3][fila]))
-                fila += 1
-    else:
-        print("Ingrese un año perteneciente al rango permitido.")
-
 
 def dia_semana(fecha):
     # https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
@@ -286,6 +223,73 @@ def dia_semana(fecha):
         return w
     else:
         return "Error, la fecha no es valida"
+
+
+# Esta funcion se encarga en mostrar el calendario de forma 3x4.
+# Toma en cuenta si el año es bisiesto y el día de la semana en el que inicia el año.
+
+def imprimir_3x4(anno):
+    meses = {1: 'Enero', 2: 'Febrero', 3: 'Marzo',
+             4: 'Abril', 5: 'Mayo', 6: 'Junio', 7: 'Julio',
+             8: 'Agosto', 9: 'Setiembre', 10: 'Octubre',
+             11: 'Noviembre', 12: 'Diciembre'}
+
+    dias_semanas = 'L ' + " " + 'K ' + " " + 'M ' + " " + 'J ' + " " + 'V ' + " " + 'S' + " " + ' D'
+
+    if anno > 1582:
+        print('Calendario del año ' + str(anno) + ' D.C' + '\n')
+        mes_actual = 1
+        dia_inicio = dia_semana((anno,1,1))
+        while mes_actual <= 12:
+            print(
+                '\n''{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(meses[mes_actual], '|', meses[mes_actual + 1], '|',
+                                                                     meses[mes_actual + 2], '|', meses[mes_actual + 3]))
+            print('{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(dias_semanas, '|', dias_semanas, '|', dias_semanas,
+                                                                   '|',
+                                                                   dias_semanas))
+            index = 1
+            calendario = []
+            while index <= 4:  # Este loop guarda en una lista llamada calendario la lista de cada mes con sus semanas.
+                if mes_actual == 1:
+                    calendario.append(imprimir_mes(31, dia_inicio))
+                    dia_inicio = int(calendario[len(calendario) - 1].pop()) // 2 + 1
+                    index += 1
+                    mes_actual += 1
+
+                elif mes_actual == 4 or mes_actual == 6 or mes_actual == 9 or mes_actual == 11:
+
+                    calendario.append(imprimir_mes(30, dia_inicio))
+                    dia_inicio = int(calendario[len(calendario) - 1].pop()) // 2 + 1
+                    index += 1
+                    mes_actual += 1
+
+                elif mes_actual == 2:
+                    if bisiesto(anno):
+                        calendario.append(imprimir_mes(29, dia_inicio))
+                        dia_inicio = int(calendario[len(calendario) - 1].pop()) // 2 + 1
+                        mes_actual += 1
+                        index += 1
+                    else:
+                        calendario.append(imprimir_mes(28, dia_inicio))
+                        dia_inicio = int(calendario[len(calendario) - 1].pop()) // 2 + 1
+                        mes_actual += 1
+                        index += 1
+                else:
+                    calendario.append(imprimir_mes(31, dia_inicio))
+                    dia_inicio = int(calendario[len(calendario) - 1].pop()) // 2 + 1
+                    mes_actual += 1
+                    index += 1
+
+            fila = 0
+            while fila < len(
+                    max(calendario)):  # Este loop permite imprimir las filas del calendario , de forma en que se muestren 4 meses seguidos.
+                print(
+                    '{:^30}{:^2}{:^30}{:^2}{:^30}{:^2}{:^30}'.format(calendario[0][fila], '|', calendario[1][fila], '|',
+                                                                     calendario[2][fila], '|', calendario[3][fila]))
+                fila += 1
+    else:
+        print("Ingrese un año perteneciente al rango permitido.")
+
 
 
 def fecha_futura(fecha, dias):
@@ -325,6 +329,46 @@ def dias_entre(fecha1, fecha2):
     else:
         return "Error, la fecha 1 no es valida"
 
+def edad_al(fecha1, fecha2):
+    if fecha_es_valida(fecha1):
+        if fecha_es_valida(fecha2):
+            if fecha2[1] <= fecha1[1]:
+                dias = fecha2[2]
+                meses = 12 - fecha1[1] + fecha2[1]
+                anno = (fecha2[0]-1) - fecha1[0]
+                return anno,meses,dias
+            else:
+                if fecha2[2] - fecha1[2] < 0:
+                    dias = (31-fecha1[2]) + fecha2[2]
+                    meses = 0
+                    anno = fecha2[0] - fecha1[0]
+                    return anno,meses, dias
+                else:
+                    dias = fecha2[2] - fecha1[2]
+                    meses = fecha2[1] - fecha1[1]
+                    anno = fecha2[0] - fecha1[0]
+                    return anno,meses, dias
+        else:
+            return "Error, la fecha 2 no es valida"
+    else:
+        return "Error, la fecha 1 no es valida"
 
+def fecha_hoy():
+    hoy = (datetime.today().strftime('%Y,%m,%d'))
+    fecha_hoy = int(hoy[0:4]),int(hoy[5:7]),int(hoy[8:])
+    return fecha_hoy
+
+def edad_hoy(fecha):
+    hoy = fecha_hoy()
+    if fecha_es_valida(fecha) and fecha <= hoy:
+        tupla = edad_al(fecha, hoy)
+        return tupla
+    else:
+        return "Error, la fecha 1 no es valida"
+    
+    
 if __name__ == '__main__':
-    print(dias_entre((2019, 4, 7), (2024, 5, 9)))
+    print(edad_al((2000, 4, 14), (2022, 4, 19)))
+    print(fecha_hoy())
+    print(edad_hoy((2000,3,14)))
+    print(imprimir_3x4(2022))
