@@ -194,13 +194,6 @@ def imprimir_mes(dias, dia_semana):
     return salida
 
 
-# Esta función se encarga calcula el dia de la semana del 1 de enero del año que el usuario ingrese , como punto de partida para los otros meses.
-def cacular_dia(anno):
-    valor = (1 + 5 * ((anno - 1) % 4) + 4 * ((anno - 1) % 100) + 6 * ((anno - 1) % 400)) % 7
-    return valor
-
-
-
 def dia_semana(fecha):
     # https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
     if fecha_es_valida(fecha):
@@ -332,9 +325,9 @@ def dias_entre(fecha1, fecha2):
 def edad_al(fecha1, fecha2):
     if fecha_es_valida(fecha1):
         if fecha_es_valida(fecha2):
-            if fecha2[1] <= fecha1[1]:
-                dias = fecha2[2]
-                meses = 12 - fecha1[1] + fecha2[1]
+            if fecha2[1] <= fecha1[1] and fecha2[2] < fecha1[2]:
+                dias = (31-fecha1[2]) + fecha2[2]
+                meses = 12 - fecha1[1] + fecha2[1]-1
                 anno = (fecha2[0]-1) - fecha1[0]
                 return anno,meses,dias
             else:
@@ -358,6 +351,7 @@ def fecha_hoy():
     fecha_hoy = int(hoy[0:4]),int(hoy[5:7]),int(hoy[8:])
     return fecha_hoy
 
+
 def edad_hoy(fecha):
     hoy = fecha_hoy()
     if fecha_es_valida(fecha) and fecha <= hoy:
@@ -368,7 +362,7 @@ def edad_hoy(fecha):
     
     
 if __name__ == '__main__':
-    print(edad_al((2000, 4, 14), (2022, 4, 19)))
-    print(fecha_hoy())
-    print(edad_hoy((2000,3,14)))
-    print(imprimir_3x4(2022))
+    print(edad_al((1957, 10, 25), (2022, 4, 6)))
+    #print(fecha_hoy())
+    print(edad_hoy((2000, 4, 14)))
+   # print(imprimir_3x4(2022))
